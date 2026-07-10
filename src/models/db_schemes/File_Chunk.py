@@ -16,4 +16,10 @@ class FileChunk(BaseModel):
         
     @classmethod
     def get_indexes(cls):
-        return [{"key" : [("chunk_project_id" , 1)] , "name" : "chunk_project_id_index_1" , "unique" : False}]
+        return [
+            {
+                "key" : [("chunk_project_id" , 1)] ,
+                "name" : "chunk_project_id_index_1" ,
+                "unique" : False
+            }
+        ]

@@ -1,16 +1,15 @@
 from fastapi import FastAPI, APIRouter , Depends , UploadFile , status , Request
 from fastapi.responses import JSONResponse
 from helpers.config import get_settings , Settings
-from controllers.DataController import DataController
-from controllers.ProjectController import ProjectController
-from controllers.ProcessController import ProcessController
-from models.Enum.ResponseEnum import ResponseEnum
+from controllers import DataController , ProjectController , ProcessController
+from models.Enum import ResponseEnum , AssetTypeEnum
+from .schemes.data import ProcessRequests
+from models import ProjectModel , ChunkModel , AssetModel
+from models.db_schemes import Asset , FileChunk
 import aiofiles
 import logging
-from .schemes.data import ProcessRequests
-from models.ProjectModel import ProjectModel
-from models.ChunkModel import ChunkModel
-from models.db_schemes.File_Chunk import FileChunk
+import os
+
 logger = logging.getLogger('uvicorn.error')
 data_router = APIRouter(
     prefix="/api/v1/data",
@@ -36,10 +35,20 @@ async def upload_file(request : Request ,project_id : str , file : UploadFile , 
         logger.error(f"Error While Uploading File: {e}")
         return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST , content={"Result":ResponseEnum.FILE_UPLOAD_FAILED})
             
+            
+    asset_model = await AssetModel.create_instance(db_client=request.app.db_client)
+    asset_resource = Asset(
+        asset_project_id=project.id,
+        asset_type=AssetTypeEnum.FILE.value,
+        asset_name=file_id,
+        asset_size=os.path.getsize(file_path)
+    )
+    
+    res = await asset_model.create_asset(asset=asset_resource)
+        
     return {
         "Response" : ResponseEnum.FILE_UPLOAD_SUCCESS.value,
-        "File ID" : file_id,
-        "Project ID" : str(project.id)
+        "File ID" : str(res.id),
     }
 
 @data_router.post("/process/{project_id}")
