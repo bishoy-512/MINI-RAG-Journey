@@ -37,7 +37,10 @@ class AssetModel(BaseDataModel):
             "asset_project_id": ObjectId(asset_project_id) if isinstance(asset_project_id, str) else asset_project_id,
             "asset_type": asset_type,
         }).to_list(length=None)
-        return [ Asset(**record) for record in records ]
+        return [
+            Asset(**rec)
+            for rec in records
+        ]
 
     async def get_asset_record(self, asset_project_id: str, asset_name: str):
         record = await self.collection.find_one({

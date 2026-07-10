@@ -10,3 +10,6 @@ class ResponseEnum (Enum):
     
     PROCESSING_SUCCESS = "processing_success"
     PROCESSING_FAILED = "processing_failed"
+    
+    NO_FILE_ERROR = "no files found"
+    FILE_ID_ERROR = "no file with given id"

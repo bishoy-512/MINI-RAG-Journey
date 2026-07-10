@@ -33,7 +33,9 @@ class ProcessController(BaseController):
     def get_file_content(self , file_id : set):
         # Get The Right Loader From get_file_loader Fun Then Execute It
         loader = self.get_file_loader(file_id=file_id)
-        return loader.load()
+        if loader:
+            return loader.load()
+        return None
     
     def process_file_content(self , file_content : list , chunk_size : int = 100 , overlap_size : int = 20):
         # Get Splitter Model Text Depend On My Chunk_Size and Overlap_size
