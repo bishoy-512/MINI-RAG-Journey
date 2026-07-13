@@ -7,3 +7,5 @@ aiofiles==23.2.1
 Motor==3.7.1
 langchain
 PyMuPDF
+openai==2.45.0
+choere==7.0.5
