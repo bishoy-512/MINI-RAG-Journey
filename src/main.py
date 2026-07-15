@@ -25,5 +25,10 @@ async def startup_db_client():
 async def shutdown_db_client():
     app.mongo_conn.close()
 
+@app.get("/oop")
+async def welcomee(name:str):
+    return {"msg":f"Hello {name}"}
+
+
 app.include_router(base.base_router)
 app.include_router(data.data_router)

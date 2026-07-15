@@ -9,3 +9,4 @@ langchain
 PyMuPDF
 openai==2.45.0
 choere==7.0.5
+qdrant-client
