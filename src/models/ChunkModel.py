@@ -45,3 +45,11 @@ class ChunkModel(BaseDataModel):
         instance = cls(db_client = db_client)
         await instance.init_collection()
         return instance
+    
+    async def get_project_chunks(self , project_id : ObjectId , page_no : int = 1 , page_size : int = 100):
+        records = await self.collection.find({
+            "chunk_project_id":project_id
+        }).skip((page_no - 1) * page_size).limit(page_size).to_list(length = None)
+        
+        return [ FileChunk(**record) for record in records ]
+        

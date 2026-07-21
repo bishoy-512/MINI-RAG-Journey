@@ -13,3 +13,14 @@ class ResponseEnum (Enum):
     
     NO_FILE_ERROR = "no files found"
     FILE_ID_ERROR = "no file with given id"
+    
+    PROJECT_NOT_FOUND_ERROR = "project_not_found"
+    
+    INSERT_INTO_VECTORDB_ERROR = "insert_into_vectorDB_error"
+    INSERT_INTO_VECTORDB_SUCCESS = "insert_into_vectorDB_success"
+    VECTORDB_COLLECTION_RETRIEVED = "vectorDB_collection_retrieved"
+    VECTORDB_SEARCH_ERROR = "vectorDB_search_error"
+    VECTORDB_SEARCH_SUCCESS = "vectorDB_search_success"
+    
+    RAG_ANSWER_ERROR = "rag_answer_error"
+    RAG_ANSWER_SUCCESS = "rag_answer_success"
